@@ -15,7 +15,7 @@
 
 .items {
     width: 700px;
-    height: 300px;
+    height: 400px;
     background-color: #000;
 }
 
@@ -23,6 +23,26 @@
     height: 100%;
     display: none;
     position: relative;
+}
+
+.item h3,
+.item p {
+    position: absolute;
+    color: #fff;
+    right: 10px;
+    text-align: end;
+    background-color: #00000039;
+    padding: 4px;
+    border-radius: 30px;
+}
+
+.item h3 {
+    top: 3px;
+    font-size: 2rem;
+}
+
+.item p {
+    top: 50px;
 }
 
 .item img {
