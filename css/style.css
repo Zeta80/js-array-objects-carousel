@@ -13,6 +13,10 @@
     flex-direction: column;
 }
 
+.d-flex {
+    display: flex;
+}
+
 .items {
     width: 700px;
     height: 400px;

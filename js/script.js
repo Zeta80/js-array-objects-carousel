@@ -3,17 +3,17 @@
 //  - titolo
 //  - descrizione
 // Creare un carosello come nella foto allegata. Attenzione! Le immagini nello screenshot sono differenti da quelli  che vi invio, ma il layout non cambia.
-// Milestone 0: []
+// Milestone 0: [X]
 // Come nel primo carosello realizzato, focalizziamoci prima sulla creazione del markup statico: costruiamo il container e inseriamo l'immagine grande in modo da poter stilare lo slider.
-// Milestone 1: []
+// Milestone 1: [X]
 // Ora rimuoviamo i contenuti statici e usiamo l’array di oggetti letterali per popolare dinamicamente il carosello.Al click dell'utente sulle frecce verso sinistra o destra, l'immagine attiva diventerà visibile e dovremo aggiungervi titolo e testo.
-// Milestone 2: []
+// Milestone 2: [X]
 // Aggiungere il **ciclo infinito** del carosello. Ovvero se la miniatura attiva è la prima e l'utente clicca la freccia verso destra, la miniatura che deve attivarsi sarà l'ultima e viceversa per l'ultima miniatura se l'utente clicca la freccia verso sinistra.
-// BONUS 1: []
+// BONUS 1: [X]
 // Aggiungere le thumbnails (sottoforma di miniatura) ed al click attivare l’immagine corrispondente.
-// BONUS 2: []
+// BONUS 2: [X]
 // Aggiungere funzionalità di autoplay: dopo un certo periodo di tempo (3 secondi) l’immagine attiva dovrà cambiare alla successiva.
-// BONUS 3: []
+// BONUS 3: [X]
 // Aggiungere bottoni di start/stop e di inversione del meccanismo di autoplay. 
 
 const games = [
@@ -101,39 +101,10 @@ thumbItems[activeItem].classList.add("active");
 
 // Navigazione
 const nextBtn = document.querySelector(".next");
-nextBtn.addEventListener("click", function () {
-    // Tolgo active dall'immagine corrente
-    sliderItems[activeItem].classList.remove("active");
-    thumbItems[activeItem].classList.remove("active");
-
-    // Posso andare avanti finchè esiste l'immagine successiva (penultimo elemento)
-    if (activeItem < sliderItems.length - 1) {
-        // Passo avanti con lo slider
-        //  incremento la posizione
-        activeItem++;
-    } else {
-        activeItem = 0
-    }
-
-    //  aggiungo active alla nuova posizione
-    sliderItems[activeItem].classList.add("active");
-    thumbItems[activeItem].classList.add("active");
-});
+nextBtn.addEventListener("click", forward);
 
 const prevBtn = document.querySelector(".prev");
-prevBtn.addEventListener("click", function () {
-    sliderItems[activeItem].classList.remove("active");
-    thumbItems[activeItem].classList.remove("active");
-    // Posso andare indietro finché esisite l'immagine precedente (il secondo elemento)
-    if (activeItem > 0) {
-        activeItem--;
-    } else {
-        // Altrimenti riparto dall'ultimo elemento
-        activeItem = sliderItems.length - 1;
-    }
-    sliderItems[activeItem].classList.add("active");
-    thumbItems[activeItem].classList.add("active");
-});
+prevBtn.addEventListener("click", toggle);
 
 
 // Aggiungere spostamento dello slider al click sul thumb
@@ -151,4 +122,72 @@ for (let i = 0; i < thumbItems.length; i++) {
         sliderItems[activeItem].classList.add("active");
         thumbItems[activeItem].classList.add("active");
     });
+}
+
+//intervallo per cambiare immagine ogni TOT secondi
+let bagigio = false
+let avantiIndietro = false
+const counter = setInterval(function () {
+    if (bagigio == false) {
+        if (avantiIndietro == false) {
+            forward()
+        } else {
+            toggle()
+        }
+    }
+}, 2000);
+
+
+//funzione per invertire lo stato di avanzamento
+function toggle() {
+    sliderItems[activeItem].classList.remove("active");
+    thumbItems[activeItem].classList.remove("active");
+    // Posso andare indietro finché esisite l'immagine precedente (il secondo elemento)
+    if (activeItem > 0) {
+        activeItem--;
+    } else {
+        // Altrimenti riparto dall'ultimo elemento
+        activeItem = sliderItems.length - 1;
+    }
+    sliderItems[activeItem].classList.add("active");
+    thumbItems[activeItem].classList.add("active");
+
+}
+
+//funzione per cambiare direzione
+function rowDirection() {
+    if (avantiIndietro == true) {
+        avantiIndietro = false
+    } else {
+        avantiIndietro = true
+    }
+}
+
+//funzione per stoppare l'avanzamento
+function stopper() {
+    if (bagigio == true) {
+        bagigio = false
+    } else {
+        bagigio = true
+    }
+}
+
+//funzione per avanzare di slide 
+function forward() {
+    // Tolgo active dall'immagine corrente
+    sliderItems[activeItem].classList.remove("active");
+    thumbItems[activeItem].classList.remove("active");
+
+    // Posso andare avanti finchè esiste l'immagine successiva (penultimo elemento)
+    if (activeItem < sliderItems.length - 1) {
+        // Passo avanti con lo slider
+        //  incremento la posizione
+        activeItem++;
+    } else {
+        activeItem = 0
+    }
+
+    //  aggiungo active alla nuova posizione
+    sliderItems[activeItem].classList.add("active");
+    thumbItems[activeItem].classList.add("active");
 }
