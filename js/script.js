@@ -191,3 +191,4 @@ function forward() {
     sliderItems[activeItem].classList.add("active");
     thumbItems[activeItem].classList.add("active");
 }
+// JAVASASSONE o(*￣▽￣*)ブ🗿
